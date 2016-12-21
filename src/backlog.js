@@ -33,7 +33,9 @@ function* remove() {
 
 function* addTask() {
   const backlog = backlogs[this.params.id];
-  backlog.tasks.push(this.request.body);
+  const task = this.request.body;
+  task.done = false;
+  backlog.tasks.push(task);
   this.body = backlog.tasks;
 }
 

@@ -14,7 +14,12 @@ defineSupportCode(({Given, When, Then}) => {
   });
 
   Then('The backlog with id {id:stringInDoubleQuotes} should have the following tasks:', function (id, table) {
+    const items = table.hashes().map(item => {
+      item.done = item.done === "true";
+      return item;
+    });
+
     return this.driver.get(`/backlog/${memory[id]}/tasks`).expect(200)
-      .then(res => res.body.should.containDeep(table.hashes()))
+      .then(res => res.body.should.containDeep(items))
   });
 });
